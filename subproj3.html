@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Self-Education</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .cs {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .namek {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+        }
+        .sub1 {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .sub1:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e7f3fe;
+            border: 1px solid #b3d7ff;
+            border-radius: 5px;
+            display: none;
+            text-align: left;
+            width: 100%;
+            max-width: 400px;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form id="quizForm" autocomplete="off">
+        <div class="cs">
+            <h2>User Name :</h2>
+            <input type="text" name="text" required placeholder="Enter user name" id="name" class="namek">
+        </div>
+        <hr>
+
+        <div>
+            <h3 class="qu">1. Which of the following tag is used to define options in a drop-down selection list?</h3>
+            <input type="radio" name="question1" id="a1" value="A"><label for="a1">A. &lt;option&gt;</label><br>
+            <input type="radio" name="question1" id="a2" value="B"><label for="a2">B. &lt;list&gt;</label><br>
+            <input type="radio" name="question1" id="a3" value="C"><label for="a3">C. &lt;select&gt;</label><br>
+            <input type="radio" name="question1" id="a4" value="D"><label for="a4">D. &lt;dropdown&gt;</label><br>
+
+            <h3 class="qu">2. Which of the following tag is used to add rows in the table?</h3>
+            <input type="radio" name="question2" id="b1" value="A"><label for="b1">A. &lt;tr&gt; and &lt;/tr&gt;</label><br>
+            <input type="radio" name="question2" id="b2" value="B"><label for="b2">B. &lt;td&gt; and &lt;/td&gt;</label><br>
+            <input type="radio" name="question2" id="b3" value="C"><label for="b3">C. &lt;th&gt; and &lt;/th&gt;</label><br>
+            <input type="radio" name="question2" id="b4" value="D"><label for="b4">D. None</label><br>
+
+            <h3 class="qu">3. HTML tags are enclosed in_____________</h3>
+            <input type="radio" name="question3" id="c1" value="A"><label for="c1">A. # and #</label><br>
+            <input type="radio" name="question3" id="c2" value="B"><label for="c2">B. &lt; and &gt;</label><br>
+            <input type="radio" name="question3" id="c3" value="C"><label for="c3">C. { and }</label><br>
+            <input type="radio" name="question3" id="c4" value="D"><label for="c4">D. ! and ?</label><br>
+
+            <h3 class="qu">4. How to create a checkbox in HTML?</h3>
+            <input type="radio" name="question4" id="d1" value="A"><label for="d1">A. &lt;checkbox&gt;</label><br>
+            <input type="radio" name="question4" id="d2" value="B"><label for="d2">B. &lt;input type="button"&gt;</label><br>
+            <input type="radio" name="question4" id="d3" value="C"><label for="d3">C. &lt;input type="checkbox"&gt;</label><br>
+            <input type="radio" name="question4" id="d4" value="D"><label for="d4">D. &lt;input type="check"&gt;</label><br>
+
+            <h3 class="qu">5. How to create an ordered list (a list with the list items in numbers) in HTML?</h3>
+            <input type="radio" name="question5" id="e1" value="A"><label for="e1">A. &lt;ol&gt;</label><br>
+            <input type="radio" name="question5" id="e2" value="B"><label for="e2">B. &lt;ul&gt;</label><br>
+            <input type="radio" name="question5" id="e3" value="C"><label for="e3">C. &lt;i&gt;</label><br>
+            <input type="radio" name="question5" id="e4" value="D"><label for="e4">D. &lt;li&gt;</label><br>
+        </div>
+        <div class="sub">
+            <input type="submit" id="submit" class="sub1" value="Submit">
+        </div>
+    </form>
+
+    <div id="result" class="result"></div>
+
+    <script>
+        const correctAnswers = {
+            question1: 'A',
+            question2: 'A',
+            question3: 'B',
+            question4: 'C',
+            question5: 'A',
+        };
+
+        document.getElementById('quizForm').onsubmit = function(event) {
+            event.preventDefault(); // Prevent form submission
+            const name = document.getElementById('name').value;
+            const answers = [
+                document.querySelector('input[name="question1"]:checked'),
+                document.querySelector('input[name="question2"]:checked'),
+                document.querySelector('input[name="question3"]:checked'),
+                document.querySelector('input[name="question4"]:checked'),
+                document.querySelector('input[name="question5"]:checked')
+            ];
+
+            let resultText = `<h2>Thank you, ${name}!</h2><h3>Your Answers:</h3><ul>`;
+            let score = 0;
+
+            answers.forEach((answer, index) => {
+                const questionKey = `question${index + 1}`;
+                if (answer) {
+                    const isCorrect = answer.value === correctAnswers[questionKey];
+                    resultText += `<li>Question ${index + 1}: <span class="${isCorrect ? 'correct' : 'incorrect'}">${answer.value}</span></li>`;
+                    if (isCorrect) score++;
+                } else {
+                    resultText += `<li>Question ${index + 1}: No answer selected</li>`;
+                }
+            });
+
+            resultText += `</ul><h3>Your Score: ${score} out of ${answers.length}</h3>`;
+            document.getElementById('result').innerHTML = resultText; // Display results in a div
+            document.getElementById('result').style.display = 'block'; // Show the results box
+        };
+    </script>
+</body>
+</html>

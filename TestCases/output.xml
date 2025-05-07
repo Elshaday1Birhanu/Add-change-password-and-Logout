@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.12.6 on win32)" generated="2024-12-21T15:43:39.078046" rpa="false" schemaversion="5">
+<suite id="s1" name="TC002" source="C:\wamp64\www\web_project\TestCases\TC002.robot">
+<test id="s1-t1" name="InputBox" line="11">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-12-21T15:43:39.579374" level="INFO">Opening browser 'chrome' to base url 'https://tmptc.edu.et/'.</msg>
+<arg>${URL}</arg>
+<arg>${browser}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-12-21T15:43:39.578289" elapsed="16.200966"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-12-21T15:43:55.779255" elapsed="0.012011"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-12-21T15:43:55.791266" level="INFO">Typing text 'ethio' into text field 'xpath://header/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/form[1]/div[1]/input[1]'.</msg>
+<arg>xpath://header/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/form[1]/div[1]/input[1]</arg>
+<arg>ethio</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-12-21T15:43:55.791266" elapsed="0.236263"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2024-12-21T15:43:56.028906" level="INFO">Clicking element 'xpath://body[1]/div[1]/div[1]/header[1]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/form[1]/div[1]/button[1]/svg[1]/path[1]'.</msg>
+<msg time="2024-12-21T15:43:56.917875" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-4.png"&gt;&lt;img src="selenium-screenshot-4.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2024-12-21T15:43:56.917875" level="FAIL">Element with locator 'xpath://body[1]/div[1]/div[1]/header[1]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/form[1]/div[1]/button[1]/svg[1]/path[1]' not found.</msg>
+<arg>xpath://body[1]/div[1]/div[1]/header[1]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/form[1]/div[1]/button[1]/svg[1]/path[1]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="FAIL" start="2024-12-21T15:43:56.027529" elapsed="0.890346">Element with locator 'xpath://body[1]/div[1]/div[1]/header[1]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/form[1]/div[1]/button[1]/svg[1]/path[1]' not found.</status>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="NOT RUN" start="2024-12-21T15:43:56.917875" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2024-12-21T15:43:39.577277" elapsed="17.340598">Element with locator 'xpath://body[1]/div[1]/div[1]/header[1]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/form[1]/div[1]/button[1]/svg[1]/path[1]' not found.</status>
+</test>
+<status status="FAIL" start="2024-12-21T15:43:39.080253" elapsed="17.837622"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="TC002">TC002</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Self-Education</title>
+    <link rel="stylesheet" type="text/css" href="subproject1css.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <style type="text/css">
+        /* Styling for the navbar container */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #444;
+            padding: 10px 20px;
+        }
+
+        /* Adjust navigation links */
+        .navbar a, .dropdownbtn {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Styling for the logout button */
+        .logout {
+            margin-left: auto;
+        }
+
+        .logout a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background-color: #04a1a1; /* Red color */
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            box-shadow: 0 0 8px rgba(217, 83, 79, 0.8);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .logout a:hover {
+            background-color: #c9302c;
+            box-shadow: 0 0 12px rgba(217, 83, 79, 1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Header -->
+    <div class="Self-Education">
+        <h1>Self-Education</h1>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <!-- Left-hand navigation -->
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Design</a>
+            <div class="dropdown">
+                <button class="dropdownbtn">Tutorials</button>
+                <div class="dropdownlist">
+                    <a href="2_Chapter 2(0).pdf">HTML</a>
+                    <a href="3_Chapter 3 Part III - CSS (1).pdf">CSS</a>
+                    <a href="JavaScript_Bible__6h_edition.pdf">JAVASCRIPT</a>
+                    <a href="PHP_PROGRAMMING_NOTES.pdf">PHP</a>
+                    <a href="Bjarne_Stroustrup_-_The_C++_Programming_Language_3rd_Ed-1.pdf">C++</a>
+                    <a href="Java A Beginner's Guide, 6th Edition (PDF).pdf">JAVA</a>
+                </div>
+            </div>
+            <a href="#">News</a>
+            <a href="#">Contact</a>
+        </div>
+
+        <!-- Right-hand logout -->
+        <div class="logout">
+            <a href="self_start.php">Logout</a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="box">
+        <a href="subproj9.html">
+            <div class="btn">
+                <button class="bt">Get Start For<br>The Quiz</button>
+            </div>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <ul class="footer-icons">
+            <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-linkedin"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="logo-youtube"></ion-icon></a></li>
+        </ul>
+        <div class="mk">
+            <h2>© COPYRIGHT 2015 E.C GROUP 1. ALL RIGHTS RESERVED.</h2>
+        </div>
+    </footer>
+</body>
+</html>

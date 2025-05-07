@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.12.6 on win32)" generated="2024-12-20T20:23:01.552918" rpa="false" schemaversion="5">
+<suite id="s1" name="TC002" source="C:\wamp64\www\web_project\TestCases\TC002.robot">
+<test id="s1-t1" name="InputBox" line="9">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-12-20T20:23:02.510784" level="INFO">Opening browser 'chrome' to base url 'https://www.google.com/'.</msg>
+<arg>${URL}</arg>
+<arg>${browser}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-12-20T20:23:02.509656" elapsed="15.117983"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-12-20T20:23:17.627639" elapsed="0.165675"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-12-20T20:23:17.795794" level="INFO">Typing text 'ethio' into text field 'xpath://*[@id="APjFqb"]'.</msg>
+<arg>xpath://*[@id="APjFqb"]</arg>
+<arg>ethio</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-12-20T20:23:17.794487" elapsed="0.405270"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2024-12-20T20:23:18.202207" level="INFO">Clicking button 'xpath:/html/body/div[1]/div[3]/form/div[1]/div[1]/div[3]/center/input[1]'.</msg>
+<msg time="2024-12-20T20:23:19.835433" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-5.png"&gt;&lt;img src="selenium-screenshot-5.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2024-12-20T20:23:19.835710" level="FAIL">ElementClickInterceptedException: Message: element click intercepted: Element &lt;input class="gNO89b" value="Google ፍለጋ" aria-label="Google ፍለጋ" name="btnK" role="button" tabindex="0" type="submit" data-ved="0ahUKEwj0hdmx7raKAxU0TWcHHYr9L7kQ4dUDCBE"&gt; is not clickable at point (721, 298). Other element would receive the click: &lt;span&gt;...&lt;/span&gt;
+  (Session info: chrome=131.0.6778.205)
+Stacktrace:
+	GetHandleVerifier [0x00007FF65474FB05+28789]
+	(No symbol) [0x00007FF6546B86E0]
+	(No symbol) [0x00007FF65455592A]
+	(No symbol) [0x00007FF6545B0FDE]
+	(No symbol) [0x00007FF6545AEA7C]
+	(No symbol) [0x00007FF6545ABC46]
+	(No symbol) [0x00007FF6545AABA1]
+	(No symbol) [0x00007FF65459CF5B]
+	(No symbol) [0x00007FF6545CF43A]
+	(No symbol) [0x00007FF65459C5B6]
+	(No symbol) [0x00007FF6545CF650]
+	(No symbol) [0x00007FF6545EF654]
+	(No symbol) [0x00007FF6545CF1E3]
+	(No symbol) [0x00007FF65459A938]
+	(No symbol) [0x00007FF65459BAA1]
+	GetHandleVerifier [0x00007FF654A8933D+3410093]
+	GetHandleVerifier [0x00007FF654A9E7DD+3497293]
+	GetHandleVerifier [0x00007FF654A92A73+3448803]
+	GetHandleVerifier [0x00007FF654817BBB+848171]
+	(No symbol) [0x00007FF6546C3C3F]
+	(No symbol) [0x00007FF6546BF6E4]
+	(No symbol) [0x00007FF6546BF87D]
+	(No symbol) [0x00007FF6546AED49]
+	BaseThreadInitThunk [0x00007FF840C9259D+29]
+	RtlUserThreadStart [0x00007FF841C2AF38+40]
+</msg>
+<arg>xpath:/html/body/div[1]/div[3]/form/div[1]/div[1]/div[3]/center/input[1]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="FAIL" start="2024-12-20T20:23:18.201011" elapsed="1.641969">ElementClickInterceptedException: Message: element click intercepted: Element &lt;input class="gNO89b" value="Google ፍለጋ" aria-label="Google ፍለጋ" name="btnK" role="button" tabindex="0" type="submit" data-ved="0ahUKEwj0hdmx7raKAxU0TWcHHYr9L7kQ4dUDCBE"&gt; is not clickable at point (721, 298). Other element would receive the click: &lt;span&gt;...&lt;/span&gt;
+  (Session info: chrome=131.0.6778.205)
+Stacktrace:
+	GetHandleVerifier [0x00007FF65474FB05+28789]
+	(No symbol) [0x00007FF6546B86E0]
+	(No symbol) [0x00007FF65455592A]
+	(No symbol) [0x00007FF6545B0FDE]
+	(No symbol) [0x00007FF6545AEA7C]
+	(No symbol) [0x00007FF6545ABC46]
+	(No symbol) [0x00007FF6545AABA1]
+	(No symbol) [0x00007FF65459CF5B]
+	(No symbol) [0x00007FF6545CF43A]
+	(No symbol) [0x00007FF65459C5B6]
+	(No symbol) [0x00007FF6545CF650]
+	(No symbol) [0x00007FF6545EF654]
+	(No symbol) [0x00007FF6545CF1E3]
+	(No symbol) [0x00007FF65459A938]
+	(No symbol) [0x00007FF65459BAA1]
+	GetHandleVerifier [0x00007FF654A8933D+3410093]
+	GetHandleVerifier [0x00007FF654A9E7DD+3497293]
+	GetHandleVerifier [0x00007FF654A92A73+3448803]
+	GetHandleVerifier [0x00007FF654817BBB+848171]
+	(No symbol) [0x00007FF6546C3C3F]
+	(No symbol) [0x00007FF6546BF6E4]
+	(No symbol) [0x00007FF6546BF87D]
+	(No symbol) [0x00007FF6546AED49]
+	BaseThreadInitThunk [0x00007FF840C9259D+29]
+	RtlUserThreadStart [0x00007FF841C2AF38+40]
+</status>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="NOT RUN" start="2024-12-20T20:23:19.843069" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2024-12-20T20:23:02.508542" elapsed="17.335802">ElementClickInterceptedException: Message: element click intercepted: Element &lt;input class="gNO89b" value="Google ፍለጋ" aria-label="Google ፍለጋ" name="btnK" role="button" tabindex="0" type="submit" data-ved="0ahUKEwj0hdmx7raKAxU0TWcHHYr9L7kQ4dUDCBE"&gt; is not clickable at point (721, 298). Other element would receive the click: &lt;span&gt;...&lt;/span&gt;
+  (Session info: chrome=131.0.6778.205)
+Stacktrace:
+	GetHandleVerifier [0x00007FF65474FB05+28789]
+	(No symbol) [0x00007FF6546B86E0]
+	(No symbol) [0x00007FF65455592A]
+	(No symbol) [0x00007FF6545B0FDE]
+	(No symbol) [0x00007FF6545AEA7C]
+	(No symbol) [0x00007FF6545ABC46]
+	(No symbol) [0x00007FF6545AABA1]
+	(No symbol) [0x00007FF65459CF5B]
+	(No symbol) [0x00007FF6545CF43A]
+	(No symbol) [0x00007FF65459C5B6]
+	(No symbol) [0x00007FF6545CF650]
+	(No symbol) [0x00007FF6545EF654]
+	(No symbol) [0x00007FF6545CF1E3]
+	(No symbol) [0x00007FF65459A938]
+	(No symbol) [0x00007FF65459BAA1]
+	GetHandleVerifier [0x00007FF654A8933D+3410093]
+	GetHandleVerifier [0x00007FF654A9E7DD+3497293]
+	GetHandleVerifier [0x00007FF654A92A73+3448803]
+	GetHandleVerifier [0x00007FF654817BBB+848171]
+	(No symbol) [0x00007FF6546C3C3F]
+	(No symbol) [0x00007FF6546BF6E4]
+	(No symbol) [0x00007FF6546BF87D]
+	(No symbol) [0x00007FF6546AED49]
+	BaseThreadInitThunk [0x00007FF840C9259D+29]
+	RtlUserThreadStart [0x00007FF841C2AF38+40]
+</status>
+</test>
+<status status="FAIL" start="2024-12-20T20:23:01.558089" elapsed="18.290004"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="TC002">TC002</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

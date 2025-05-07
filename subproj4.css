@@ -1,0 +1,46 @@
+*{
+	background: #D9E9FF;
+}
+.cs{
+	text-align: center;
+}
+.cs h2{
+	display: inline-block;
+}
+.namek{
+	box-shadow: 0 5px 50px 0 #15f4ee inset,0 5px 50px 0 #15f4ee,
+	             0 5px 50px 0 #15f4ee inset,0 5px 50px 0 #15f4ee;
+}
+.cs input{
+	border: none;
+	border-bottom: 2px dashed ;
+	padding: 5px 10px;
+	outline: none;
+	font-size: 19px;
+	font-weight: 200;
+	color: black;
+	text-transform: uppercase;
+}
+.qu{
+	text-transform: capitalize;
+}
+.sub1{
+	margin-top: 50px;
+	font-size: 37px;
+	text-transform: uppercase;
+	padding: 15px 50px;
+	border-radius: 30px 0;
+	letter-spacing: 2px;
+	border: none;
+	background: black;
+	color: #fff;
+	font-weight: 200;
+	cursor: pointer;
+	transition: all linear .3s;
+	
+}
+.sub1:hover{
+	border-radius: 0px 50px;
+	box-shadow: 0 5px 50px 0 #15f4ee inset,0 5px 50px 0 #15f4ee,
+	             0 5px 50px 0 #15f4ee inset,0 5px 50px 0 #15f4ee;
+}
