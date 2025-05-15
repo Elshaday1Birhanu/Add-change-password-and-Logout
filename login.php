@@ -54,7 +54,7 @@ if (isset($_POST['Login'])) {
         } else {
             $error_message = "Email not found.";
         }
-
+    }
     // Close the connection
     mysqli_close($conn);
 }
