@@ -18,39 +18,42 @@ if (isset($_POST['Login'])) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // Check if the email is already registered
-    $checkEmailSql = "SELECT * FROM self_education WHERE email=?";
-    $checkEmailStmt = mysqli_prepare($conn, $checkEmailSql);
-    mysqli_stmt_bind_param($checkEmailStmt, 's', $usernameOrEmail);
-    mysqli_stmt_execute($checkEmailStmt);
-    $emailResult = mysqli_stmt_get_result($checkEmailStmt);
-
-    if (mysqli_num_rows($emailResult) > 0) {
-        // If the email is registered, proceed to login attempt
-        $sql = "SELECT * FROM self_education WHERE username=? OR email=?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'ss', $usernameOrEmail, $usernameOrEmail);
+ elseif (isset($_POST['reset_request'])) {
+        $email = trim(strtolower($_POST['email']));
+        $stmt = mysqli_prepare($conn, "SELECT * FROM self_education WHERE LOWER(email)=?");
+        mysqli_stmt_bind_param($stmt, 's', $email);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
-
         if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            // Verify the password
-            if (password_verify($password, $row['password'])) {
-                // Start the session and redirect to subproject12.html
-                session_start();
-                $_SESSION['user_id'] = $row['id']; // Store user ID in session
-                header("Location: subproject12.html"); // Redirect to subproject12.html
-                exit();
-            } else {
-                $error_message = "Incorrect password."; // Set error message for incorrect password
+            $token = bin2hex(random_bytes(32));
+            $expires = date("Y-m-d H:i:s", strtotime('+1 hour'));
+            $updateStmt = mysqli_prepare($conn, "UPDATE self_education SET reset_token=?, reset_expires=? WHERE LOWER(email)=?");
+            mysqli_stmt_bind_param($updateStmt, 'sss', $token, $expires, $email);
+            mysqli_stmt_execute($updateStmt);
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'elshadaybirhanu75@gmail.com';
+                $mail->Password = 'miua xleb vrjl suhh';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+                $mail->setFrom('elshadaybirhanu75@gmail.com', 'Self Education System');
+                $mail->addAddress($email);
+                $mail->isHTML(true);
+                $mail->Subject = 'Password Reset Request';
+                $resetLink = "http://localhost/web_project/login.php?action=reset&token=" . urlencode($token);
+                $mail->Body = "<p>You requested a password reset. Click the link below to reset your password:</p><p><a href='$resetLink'>Reset Password</a></p><p>This link will expire in 1 hour.</p>";
+                $mail->send();
+                $success_message = 'Password reset link has been sent to your email!';
+            } catch (Exception $e) {
+                error_log("Mailer Error: " . $mail->ErrorInfo);
+                $error_message = 'Failed to send reset email. Please try again later.';
             }
         } else {
-            $error_message = "No user found with this username or email."; // Set error message for no user found
+            $error_message = "Email not found.";
         }
-    } else {
-        $error_message = "Email is not registered."; // Set error message for unregistered email
-    }
 
     // Close the connection
     mysqli_close($conn);
@@ -142,6 +145,6 @@ if (isset($_POST['Login'])) {
         Don't have an account? <a href="index.php">Sign up here</a>
     </div>
 </div>
-<h1>hello world</h1>
+
 </body>
 </html>
