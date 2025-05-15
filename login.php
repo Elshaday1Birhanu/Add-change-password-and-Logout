@@ -17,40 +17,73 @@ if (isset($_POST['Login'])) {
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
+if (isset($_POST['action']) && $_POST['action'] === 'change') {
+    $response = array();
+    $email = trim(mysqli_real_escape_string($conn, $_POST['email']));
+    $current_password = $_POST['current_password'];
+    $new_password = $_POST['new_password'];
+    $query = "SELECT id, password FROM self_education WHERE email = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ($row = mysqli_fetch_assoc($result)) {
+        if (password_verify($current_password, $row['password'])) {
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $update_query = "UPDATE self_education SET password = ? WHERE id = ?";
+            $update_stmt = mysqli_prepare($conn, $update_query);
+            mysqli_stmt_bind_param($update_stmt, 'si', $hashed_password, $row['id']);
+            if (mysqli_stmt_execute($update_stmt)) {
+                $response['success'] = true;
+                $response['message'] = 'Password updated successfully! Redirecting to login page...';
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'Failed to update password. Please try again.';
+                error_log("Password update SQL error: " . mysqli_error($conn));
+            }
+            mysqli_stmt_close($update_stmt);
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Current password is incorrect.';
+        }
+    } else {
+        $response['success'] = false;
+        $response['message'] = 'Email not found.';
+    }
+    mysqli_stmt_close($stmt);
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    mysqli_close($conn);
+    exit();
+}
 
-    // Check if the email is already registered
-    $checkEmailSql = "SELECT * FROM self_education WHERE email=?";
-    $checkEmailStmt = mysqli_prepare($conn, $checkEmailSql);
-    mysqli_stmt_bind_param($checkEmailStmt, 's', $usernameOrEmail);
-    mysqli_stmt_execute($checkEmailStmt);
-    $emailResult = mysqli_stmt_get_result($checkEmailStmt);
+// Initialize messages
+$error_message = "";
+$success_message = "";
 
-    if (mysqli_num_rows($emailResult) > 0) {
-        // If the email is registered, proceed to login attempt
-        $sql = "SELECT * FROM self_education WHERE username=? OR email=?";
-        $stmt = mysqli_prepare($conn, $sql);
+// Handle form submissions
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['Login'])) {
+        $usernameOrEmail = trim(strtolower($_POST['usernameOrEmail']));
+        $password = $_POST['password'];
+        $stmt = mysqli_prepare($conn, "SELECT * FROM self_education WHERE LOWER(username)=? OR LOWER(email)=?");
         mysqli_stmt_bind_param($stmt, 'ss', $usernameOrEmail, $usernameOrEmail);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
-
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
-            // Verify the password
             if (password_verify($password, $row['password'])) {
-                // Start the session and redirect to subproject12.html
-                session_start();
-                $_SESSION['user_id'] = $row['id']; // Store user ID in session
-                header("Location: subproject12.html"); // Redirect to subproject12.html
+                $_SESSION['user_id'] = $row['id'];
+                header("Location: subproject12.html");
                 exit();
             } else {
-                $error_message = "Incorrect password."; // Set error message for incorrect password
+                $error_message = "Incorrect password.";
             }
         } else {
-            $error_message = "No user found with this username or email."; // Set error message for no user found
+            $error_message = "Invalid credentials.";
         }
-    } else {
-        $error_message = "Email is not registered."; // Set error message for unregistered email
     }
+
 
     // Close the connection
     mysqli_close($conn);
