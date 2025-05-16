@@ -17,73 +17,111 @@ if (isset($_POST['Login'])) {
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-if (isset($_POST['action']) && $_POST['action'] === 'change') {
-    $response = array();
-    $email = trim(mysqli_real_escape_string($conn, $_POST['email']));
-    $current_password = $_POST['current_password'];
-    $new_password = $_POST['new_password'];
-    $query = "SELECT id, password FROM self_education WHERE email = ?";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, 's', $email);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    if ($row = mysqli_fetch_assoc($result)) {
-        if (password_verify($current_password, $row['password'])) {
-            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-            $update_query = "UPDATE self_education SET password = ? WHERE id = ?";
-            $update_stmt = mysqli_prepare($conn, $update_query);
-            mysqli_stmt_bind_param($update_stmt, 'si', $hashed_password, $row['id']);
-            if (mysqli_stmt_execute($update_stmt)) {
-                $response['success'] = true;
-                $response['message'] = 'Password updated successfully! Redirecting to login page...';
-            } else {
-                $response['success'] = false;
-                $response['message'] = 'Failed to update password. Please try again.';
-                error_log("Password update SQL error: " . mysqli_error($conn));
-            }
-            mysqli_stmt_close($update_stmt);
-        } else {
-            $response['success'] = false;
-            $response['message'] = 'Current password is incorrect.';
-        }
-    } else {
-        $response['success'] = false;
-        $response['message'] = 'Email not found.';
-    }
-    mysqli_stmt_close($stmt);
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    mysqli_close($conn);
-    exit();
-}
 
-// Initialize messages
-$error_message = "";
-$success_message = "";
-
-// Handle form submissions
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['Login'])) {
-        $usernameOrEmail = trim(strtolower($_POST['usernameOrEmail']));
-        $password = $_POST['password'];
-        $stmt = mysqli_prepare($conn, "SELECT * FROM self_education WHERE LOWER(username)=? OR LOWER(email)=?");
-        mysqli_stmt_bind_param($stmt, 'ss', $usernameOrEmail, $usernameOrEmail);
+    if (isset($_POST['action']) && $_POST['action'] === 'change') {
+        $response = array();
+        $email = trim(mysqli_real_escape_string($conn, $_POST['email']));
+        $current_password = $_POST['current_password'];
+        $new_password = $_POST['new_password'];
+        $query = "SELECT id, password FROM self_education WHERE email = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, 's', $email);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            if (password_verify($password, $row['password'])) {
-                $_SESSION['user_id'] = $row['id'];
-                header("Location: subproject12.html");
-                exit();
+        
+        if ($row = mysqli_fetch_assoc($result)) {
+            if (password_verify($current_password, $row['password'])) {
+                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+                $update_query = "UPDATE self_education SET password = ? WHERE id = ?";
+                $update_stmt = mysqli_prepare($conn, $update_query);
+                mysqli_stmt_bind_param($update_stmt, 'si', $hashed_password, $row['id']);
+                if (mysqli_stmt_execute($update_stmt)) {
+                    $response['success'] = true;
+                    $response['message'] = 'Password updated successfully! Redirecting to login page...';
+                } else {
+                    $response['success'] = false;
+                    $response['message'] = 'Failed to update password. Please try again.';
+                    error_log("Password update SQL error: " . mysqli_error($conn));
+                }
+                mysqli_stmt_close($update_stmt);
             } else {
-                $error_message = "Incorrect password.";
+                $response['success'] = false;
+                $response['message'] = 'Current password is incorrect.';
             }
         } else {
-            $error_message = "Invalid credentials.";
+            $response['success'] = false;
+            $response['message'] = 'Email not found.';
+        }
+        mysqli_stmt_close($stmt);
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        mysqli_close($conn);
+        exit();
+    }
+
+    // Handle form submissions
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['Login'])) {
+            $usernameOrEmail = trim(strtolower($_POST['usernameOrEmail']));
+            $password = $_POST['password'];
+            $stmt = mysqli_prepare($conn, "SELECT * FROM self_education WHERE LOWER(username)=? OR LOWER(email)=?");
+            mysqli_stmt_bind_param($stmt, 'ss', $usernameOrEmail, $usernameOrEmail);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            if (mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                if (password_verify($password, $row['password'])) {
+                    $_SESSION['user_id'] = $row['id'];
+                    header("Location: subproject12.html");
+                    exit();
+                } else {
+                    $error_message = "Incorrect password.";
+                }
+            } else {
+                $error_message = "Invalid credentials.";
+            }
         }
     }
 
+    // Reset password functionality
+    elseif (isset($_POST['reset_request'])) {
+        $email = trim(strtolower($_POST['email']));
+        $stmt = mysqli_prepare($conn, "SELECT * FROM self_education WHERE LOWER(email)=?");
+        mysqli_stmt_bind_param($stmt, 's', $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        
+        if (mysqli_num_rows($result) > 0) {
+            $token = bin2hex(random_bytes(32));
+            $expires = date("Y-m-d H:i:s", strtotime('+1 hour'));
+            $updateStmt = mysqli_prepare($conn, "UPDATE self_education SET reset_token=?, reset_expires=? WHERE LOWER(email)=?");
+            mysqli_stmt_bind_param($updateStmt, 'sss', $token, $expires, $email);
+            mysqli_stmt_execute($updateStmt);
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'elshadaybirhanu75@gmail.com';
+                $mail->Password = 'miua xleb vrjl suhh';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+                $mail->setFrom('elshadaybirhanu75@gmail.com', 'Self Education System');
+                $mail->addAddress($email);
+                $mail->isHTML(true);
+                $mail->Subject = 'Password Reset Request';
+                $resetLink = "http://localhost/web_project/login.php?action=reset&token=" . urlencode($token);
+                $mail->Body = "<p>You requested a password reset. Click the link below to reset your password:</p><p><a href='$resetLink'>Reset Password</a></p><p>This link will expire in 1 hour.</p>";
+                $mail->send();
+                $success_message = 'Password reset link has been sent to your email!';
+            } catch (Exception $e) {
+                error_log("Mailer Error: " . $mail->ErrorInfo);
+                $error_message = 'Failed to send reset email. Please try again later.';
+            }
+        } else {
+            $error_message = "Email not found.";
+        }
+    }
 
     // Close the connection
     mysqli_close($conn);
