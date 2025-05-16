@@ -58,7 +58,9 @@ if (isset($_POST['Login'])) {
         mysqli_close($conn);
         exit();
     }
-
+    // Initialize messages
+    $error_message = "";
+    $success_message = "";
     // Handle form submissions
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['Login'])) {
