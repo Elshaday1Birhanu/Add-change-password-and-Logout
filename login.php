@@ -51,10 +51,35 @@ if (isset($_POST['Login'])) {
     } else {
         $error_message = "Email is not registered."; // Set error message for unregistered email
     }
-
-    // Close the connection
-    mysqli_close($conn);
+elseif (isset($_POST['reset_password'])) {
+        $token = trim($_POST['token']);
+        $password = $_POST['password'];
+        $stmt = mysqli_prepare($conn, "SELECT * FROM self_education WHERE reset_token=? AND reset_expires > ?");
+        $current_time = date('Y-m-d H:i:s');
+        mysqli_stmt_bind_param($stmt, 'ss', $token, $current_time);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $updateStmt = mysqli_prepare($conn, "UPDATE self_education SET password=?, reset_token=NULL, reset_expires=NULL WHERE id=?");
+            mysqli_stmt_bind_param($updateStmt, 'si', $hashed_password, $row['id']);
+            if (mysqli_stmt_execute($updateStmt)) {
+                $success_message = "Password reset successfully! You can now login.";
+                header("Refresh: 3; url=login.php");
+            } else {
+                $error_message = "Failed to reset password. Please try again.";
+                error_log("Password update error: " . mysqli_error($conn));
+            }
+        } else {
+            $error_message = "Invalid or expired reset token. Please request a new password reset.";
+            error_log("Invalid token attempt with token: " . $token);
+        }
+    }
 }
+
+$show_reset_form = isset($_GET['token']) || (isset($_GET['action']) && $_GET['action'] === 'reset');
+$token = isset($_GET['token']) ? $_GET['token'] : '';
 ?>
 
 <!DOCTYPE html>
