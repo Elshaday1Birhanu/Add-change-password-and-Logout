@@ -1,10 +1,12 @@
 <?php
-$error_message = ""; // Initialize error message variable
+session_start();
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-if (isset($_POST['Login'])) {
-    $usernameOrEmail = $_POST['usernameOrEmail'];
-    $password = $_POST['password'];
-
+// Include PHPMailer classes
+require 'PHPMailer-master/src/Exception.php';
+require 'PHPMailer-master/src/PHPMailer.php';
+require 'PHPMailer-master/src/SMTP.php';
     $host = 'localhost';
     $user = 'root';
     $pass = '';
