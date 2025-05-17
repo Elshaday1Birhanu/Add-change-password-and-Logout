@@ -102,5 +102,84 @@
             <h2>© COPYRIGHT 2015 E.C GROUP 1. ALL RIGHTS RESERVED.</h2>
         </div>
     </footer>
+    <script>
+        // Sidebar open/close logic
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('active');
+            document.getElementById('sidebarOverlay').classList.add('active');
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('sidebarOverlay').classList.remove('active');
+        }
+        // Show the Change Password modal
+        function showChangePasswordForm() {
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('changePasswordForm').classList.add('active');
+            document.getElementById('message').className = 'message';
+            document.getElementById('message').textContent = '';
+            document.getElementById('passwordForm').reset();
+        }
+        // Hide the Change Password modal
+        function hideChangePasswordForm() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('changePasswordForm').classList.remove('active');
+            document.getElementById('passwordForm').reset();
+        }
+        // Show feedback message in the modal
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = message;
+            messageDiv.className = message ${type};
+        }
+        // Handle Change Password form submission
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newPassword = document.getElementById('new_password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            if (newPassword !== confirmPassword) {
+                showMessage('New passwords do not match!', 'error');
+                return;
+            }
+            const formData = new FormData(this);
+            formData.append('action', 'change');
+            fetch('login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage(data.message, 'success');
+                    setTimeout(() => {
+                        hideChangePasswordForm();
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                showMessage('An error occurred. Please try again.', 'error');
+                console.error('Error:', error);
+            });
+        });
+
+        // Logout confirmation functions
+        function showLogoutConfirmation() {
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('logoutConfirmModal').classList.add('active');
+        }
+
+        function hideLogoutConfirmation() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('logoutConfirmModal').classList.remove('active');
+        }
+
+        function confirmLogout() {
+            // Redirect to logout page
+            window.location.href = 'self_start.php';
+        }
+    </script>
 </body>
 </html>
