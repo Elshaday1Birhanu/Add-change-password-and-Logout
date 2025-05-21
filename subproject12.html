@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Self-Education</title>
+    <!-- Main stylesheet and icon library -->
     <link rel="stylesheet" type="text/css" href="subproject1css.css">
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <style type="text/css">
-        /* Styling for the navbar container */
+        /* --- NAVBAR STYLES --- */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -15,8 +16,6 @@
             background-color: #444;
             padding: 10px 20px;
         }
-
-        /* Adjust navigation links */
         .navbar a, .dropdownbtn {
             color: white;
             text-decoration: none;
@@ -24,39 +23,241 @@
             font-size: 16px;
             font-weight: bold;
         }
-
-        /* Styling for the logout button */
         .logout {
             margin-left: auto;
+            display: flex;
+            align-items: center;
         }
-
         .logout a {
             display: inline-block;
             text-decoration: none;
             color: white;
-            background-color: #04a1a1; /* Red color */
+            background-color: #04a1a1;
             padding: 10px 20px;
             font-size: 14px;
             border-radius: 5px;
             box-shadow: 0 0 8px rgba(217, 83, 79, 0.8);
             transition: all 0.3s ease-in-out;
+            margin-left: 10px;
         }
-
         .logout a:hover {
             background-color: #c9302c;
             box-shadow: 0 0 12px rgba(217, 83, 79, 1);
         }
+        /* --- SIDEBAR STYLES --- */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            right: 0;
+            background-color: #222;
+            overflow-x: hidden;
+            transition: 0.4s;
+            padding-top: 60px;
+            box-shadow: -2px 0 8px rgba(0,0,0,0.3);
+        }
+        .sidebar a {
+            padding: 12px 32px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            transition: 0.2s;
+        }
+        .sidebar a:hover {
+            background: #04a1a1;
+            color: #fff;
+        }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 36px;
+            color: #fff;
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            z-index: 1500;
+        }
+        .sidebar.active {
+            width: 260px;
+        }
+        .sidebar-overlay.active {
+            display: block;
+        }
+        /* --- CHANGE PASSWORD MODAL STYLES --- */
+        .change-password-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+            z-index: 3000;
+            width: 90%;
+            max-width: 400px;
+        }
+        .change-password-form.active {
+            display: block;
+        }
+        .change-password-form h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            font-size: 14px;
+        }
+        .form-group label {
+            display: block;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .form-buttons button {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .submit-btn {
+            background-color: #04a1a1;
+            color: white;
+        }
+        .cancel-btn {
+            background-color: #666;
+            color: white;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2999;
+        }
+        .overlay.active {
+            display: block;
+        }
+        .message {
+            display: none;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+        }
+        .message.success {
+            background-color: #28a745;
+            display: block;
+        }
+        .message.error {
+            background-color: #dc3545;
+            display: block;
+        }
+        /* --- LOGOUT CONFIRMATION MODAL STYLES --- */
+        .logout-confirm-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+            z-index: 3500;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+        }
+        .logout-confirm-modal.active {
+            display: block;
+        }
+        .logout-confirm-modal h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        .logout-confirm-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .logout-confirm-buttons button {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .confirm-logout-btn {
+            background-color: #c9302c;
+            color: white;
+        }
+        .cancel-logout-btn {
+            background-color: #666;
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <!-- Page Header -->
+    <!-- PHASE 1: SIDEBAR FOR SETTINGS AND LOGOUT -->
+    <div id="sidebar" class="sidebar">
+        <a href="#" class="closebtn" onclick="closeSidebar()">&times;</a>
+        <!-- Change Password option opens the modal -->
+        <a href="#" onclick="showChangePasswordForm(); closeSidebar(); return false;">Change Password</a>
+        <!-- Logout option inside the sidebar - now shows confirmation -->
+        <a href="#" onclick="showLogoutConfirmation(); closeSidebar(); return false;">Logout</a>
+    </div>
+    <!-- Overlay for sidebar -->
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- LOGOUT CONFIRMATION MODAL -->
+    <div id="logoutConfirmModal" class="logout-confirm-modal">
+        <h3>Are you sure you want to logout?</h3>
+        <div class="logout-confirm-buttons">
+            <button class="cancel-logout-btn" onclick="hideLogoutConfirmation()">Cancel</button>
+            <button class="confirm-logout-btn" onclick="confirmLogout()">Yes, Logout</button>
+        </div>
+    </div>
+
+    <!-- PHASE 2: PAGE HEADER -->
     <div class="Self-Education">
         <h1>Self-Education</h1>
     </div>
 
-    <!-- Navigation Bar -->
+    <!-- PHASE 3: NAVIGATION BAR -->
     <div class="navbar">
-        <!-- Left-hand navigation -->
         <div>
             <a href="#">Home</a>
             <a href="#">Design</a>
@@ -74,14 +275,44 @@
             <a href="#">News</a>
             <a href="#">Contact</a>
         </div>
-
-        <!-- Right-hand logout -->
         <div class="logout">
-            <a href="self_start.php">Logout</a>
+            <!-- Settings button opens the sidebar -->
+            <a href="#" onclick="openSidebar(); return false;">
+                <ion-icon name="settings-outline" style="vertical-align:middle;font-size:20px;"></ion-icon> Settings
+            </a>
         </div>
     </div>
 
-    <!-- Page Content -->
+    <!-- PHASE 4: CHANGE PASSWORD MODAL FORM -->
+    <div class="overlay" id="overlay"></div>
+    <div class="change-password-form" id="changePasswordForm">
+        <h2>Change Password</h2>
+        <div id="message" class="message"></div>
+        <form id="passwordForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="current_password">Current Password</label>
+                <input type="password" id="current_password" name="current_password" required>
+            </div>
+            <div class="form-group">
+                <label for="new_password">New Password</label>
+                <input type="password" id="new_password" name="new_password" required minlength="8">
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm New Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required minlength="8">
+            </div>
+            <div class="form-buttons">
+                <button type="button" class="cancel-btn" onclick="hideChangePasswordForm()">Cancel</button>
+                <button type="submit" class="submit-btn">Change Password</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- PHASE 5: MAIN PAGE CONTENT -->
     <div class="box">
         <a href="subproj9.html">
             <div class="btn">
@@ -90,7 +321,7 @@
         </a>
     </div>
 
-    <!-- Footer -->
+    <!-- PHASE 6: FOOTER -->
     <footer>
         <ul class="footer-icons">
             <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
@@ -102,6 +333,8 @@
             <h2>© COPYRIGHT 2015 E.C GROUP 1. ALL RIGHTS RESERVED.</h2>
         </div>
     </footer>
+
+    <!-- PHASE 7: JAVASCRIPT FOR INTERACTIVITY -->
     <script>
         // Sidebar open/close logic
         function openSidebar() {
@@ -130,7 +363,7 @@
         function showMessage(message, type) {
             const messageDiv = document.getElementById('message');
             messageDiv.textContent = message;
-            messageDiv.className = message ${type};
+            messageDiv.className = `message ${type}`;
         }
         // Handle Change Password form submission
         document.getElementById('passwordForm').addEventListener('submit', function(e) {
